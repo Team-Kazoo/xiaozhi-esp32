@@ -55,6 +55,7 @@ public:
         uint32_t bytes_sent;
         uint32_t read_errors;
         uint32_t write_errors;
+        uint32_t frames_dropped;
     };
     
     Statistics GetStatistics() const { return stats_; }
@@ -79,6 +80,11 @@ private:
     static constexpr uint32_t MAX_CONSECUTIVE_FAILURES = 3;   // 连续失败次数阈值（降低以更快检测断开）
     static constexpr uint32_t RECONNECT_INTERVAL_MS = 500;    // 重连间隔（毫秒，降低以更快重连）
     static constexpr uint32_t MAX_RECONNECT_ATTEMPTS = 20;    // 最大重连尝试次数（避免无限重连）
+    
+    // 时间流控相关
+    TickType_t last_frame_time_;                              // 上一帧的时间戳
+    TickType_t frame_interval_ticks_;                        // 每帧的时间间隔（tick数）
+    uint32_t frames_dropped_;                                // 丢帧计数
 
     static void AudioStreamTask(void* arg);
     void ProcessFrame();
