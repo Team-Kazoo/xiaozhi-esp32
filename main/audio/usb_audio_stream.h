@@ -71,11 +71,20 @@ private:
     
     bool need_resample_;
     std::vector<int16_t> resample_buffer_;
+    
+    // 连接状态和重连相关
+    bool is_connected_;
+    uint32_t consecutive_failures_;
+    uint32_t reconnect_attempts_;
+    static constexpr uint32_t MAX_CONSECUTIVE_FAILURES = 3;   // 连续失败次数阈值（降低以更快检测断开）
+    static constexpr uint32_t RECONNECT_INTERVAL_MS = 500;    // 重连间隔（毫秒，降低以更快重连）
+    static constexpr uint32_t MAX_RECONNECT_ATTEMPTS = 20;    // 最大重连尝试次数（避免无限重连）
 
     static void AudioStreamTask(void* arg);
     void ProcessFrame();
     static uint16_t CalculateChecksum(const uint8_t* data, size_t length);
     bool SendFrame(const int16_t* data, int samples);
+    bool Reconnect();
 };
 
 #endif // USB_AUDIO_STREAM_H

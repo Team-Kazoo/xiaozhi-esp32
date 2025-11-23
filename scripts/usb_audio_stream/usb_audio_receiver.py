@@ -38,7 +38,7 @@ CHECKSUM_SIZE = 2
 class AudioFrameReceiver:
     """音频帧接收器"""
     
-    def __init__(self, port, baudrate=2000000, sample_rate=24000):
+    def __init__(self, port, baudrate=2000000, sample_rate=48000):
         """
         初始化接收器
         

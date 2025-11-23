@@ -63,10 +63,10 @@ void usb_audio_example_start() {
     // 启动音频编解码器
     codec->Start();
     
-    // 创建USB音频流（低延迟模式：2.5ms帧）
+    // 创建USB音频流（低延迟模式：2.5ms帧，48kHz采样率）
     g_usb_stream = new UsbAudioStream();
     
-    if (!g_usb_stream->Initialize(codec, 24000, 60)) {
+    if (!g_usb_stream->Initialize(codec, 48000, 120)) {
         delete g_usb_stream;
         g_usb_stream = nullptr;
         return;

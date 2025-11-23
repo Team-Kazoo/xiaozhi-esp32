@@ -26,7 +26,7 @@ except ImportError:
 class AudioPlayer:
     """Real-time audio player"""
     
-    def __init__(self, sample_rate=24000):
+    def __init__(self, sample_rate=48000):
         self.sample_rate = sample_rate
         self.p = pyaudio.PyAudio()
         self.stream = None
@@ -38,7 +38,7 @@ class AudioPlayer:
             channels=1,
             rate=self.sample_rate,
             output=True,
-            frames_per_buffer=60  # Low latency mode
+            frames_per_buffer=120  # Low latency mode (2.5ms @ 48kHz)
         )
         print(f"Audio playback started: {self.sample_rate} Hz")
     
@@ -62,8 +62,8 @@ def main():
     
     parser.add_argument('--port', '-p', required=True,
                         help='Serial port device (e.g., /dev/ttyACM0)')
-    parser.add_argument('--rate', '-r', type=int, default=24000,
-                        help='Audio sample rate (default: 24000)')
+    parser.add_argument('--rate', '-r', type=int, default=48000,
+                        help='Audio sample rate (default: 48000)')
     
     args = parser.parse_args()
     

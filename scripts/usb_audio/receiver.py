@@ -18,7 +18,7 @@ CHECKSUM_SIZE = 2
 class AudioFrameReceiver:
     """Audio frame receiver for USB CDC audio stream"""
     
-    def __init__(self, port, baudrate=2000000, sample_rate=24000):
+    def __init__(self, port, baudrate=2000000, sample_rate=48000):
         """
         Initialize receiver
         

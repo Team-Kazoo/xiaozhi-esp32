@@ -24,7 +24,7 @@ except ImportError:
 class AudioPlayer:
     """实时音频播放器"""
     
-    def __init__(self, sample_rate=24000):
+    def __init__(self, sample_rate=48000):
         self.sample_rate = sample_rate
         self.p = pyaudio.PyAudio()
         self.stream = None
@@ -36,7 +36,7 @@ class AudioPlayer:
             channels=1,
             rate=self.sample_rate,
             output=True,
-            frames_per_buffer=60  # 2.5ms @ 24kHz - 低延迟模式
+            frames_per_buffer=120  # 2.5ms @ 48kHz - 低延迟模式
         )
         print(f"Audio output started: {self.sample_rate} Hz")
     
@@ -60,8 +60,8 @@ def main():
     
     parser.add_argument('--port', '-p', required=True,
                         help='Serial port device (e.g., /dev/ttyACM0)')
-    parser.add_argument('--rate', '-r', type=int, default=24000,
-                        help='Audio sample rate in Hz (default: 24000)')
+    parser.add_argument('--rate', '-r', type=int, default=48000,
+                        help='Audio sample rate in Hz (default: 48000)')
     
     args = parser.parse_args()
     
